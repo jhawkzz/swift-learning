@@ -1,0 +1,1 @@
+Left off https://developer.apple.com/tutorials/swiftui/building-lists-and-navigation Section 6
