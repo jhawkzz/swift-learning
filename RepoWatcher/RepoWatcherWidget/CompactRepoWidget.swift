@@ -8,13 +8,13 @@
 import WidgetKit
 import SwiftUI
 
-struct Provider: TimelineProvider {
-    func placeholder(in context: Context) -> RepoEntry {
-        RepoEntry(date: Date(), repo: MockData.repoOne, bottomRepo: MockData.repoTwo)
+struct CompactRepoProvider: TimelineProvider {
+    func placeholder(in context: Context) -> CompactRepoEntry {
+        CompactRepoEntry(date: Date(), repo: MockData.repoOne, bottomRepo: MockData.repoTwo)
     }
 
-    func getSnapshot(in context: Context, completion: @escaping (RepoEntry) -> ()) {
-        let entry = RepoEntry(date: Date(), repo: MockData.repoOne, bottomRepo: MockData.repoTwo)
+    func getSnapshot(in context: Context, completion: @escaping (CompactRepoEntry) -> ()) {
+        let entry = CompactRepoEntry(date: Date(), repo: MockData.repoOne, bottomRepo: MockData.repoTwo)
         completion(entry)
     }
 
@@ -39,7 +39,7 @@ struct Provider: TimelineProvider {
                 }
 
                 // Create Entry & Timeline
-                let entry = RepoEntry(date: .now, repo: repo, bottomRepo: bottomRepo)
+                let entry = CompactRepoEntry(date: .now, repo: repo, bottomRepo: bottomRepo)
                 let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
                 completion(timeline)
             } catch {
@@ -49,16 +49,16 @@ struct Provider: TimelineProvider {
     }
 }
 
-struct RepoEntry: TimelineEntry {
+struct CompactRepoEntry: TimelineEntry {
     let date: Date
     let repo: Repository
     let bottomRepo: Repository?
 }
 
-struct RepoWatcherWidgetEntryView : View {
+struct CompactRepoEntryView : View {
     @Environment(\.widgetFamily) var family
     
-    var entry: RepoEntry
+    var entry: CompactRepoEntry
     
     var body: some View {
         
@@ -81,22 +81,22 @@ struct RepoWatcherWidgetEntryView : View {
     }
 }
 
-struct RepoWatcherWidget: Widget {
-    let kind: String = "RepoWatcherWidget"
+struct CompactRepoWidget: Widget {
+    let kind: String = "CompactRepoWidget" // this is bound to the installed instance. you have to delete / re-add from devices if this changes.
 
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: Provider()) { entry in
-            RepoWatcherWidgetEntryView(entry: entry)
+        StaticConfiguration(kind: kind, provider: CompactRepoProvider()) { entry in
+            CompactRepoEntryView(entry: entry)
         }
         .configurationDisplayName("Repo Watcher")
-        .description("This is an example widget.")
+        .description("Keep tabs on your favorite repos.")
         .supportedFamilies([.systemMedium, .systemLarge])
     }
 }
 
-struct RepoWatcherWidget_Previews: PreviewProvider {
+struct CompactRepoWidget_Previews: PreviewProvider {
     static var previews: some View {
-        RepoWatcherWidgetEntryView(entry: RepoEntry(date: Date(), repo: MockData.repoOne, bottomRepo: MockData.repoTwo))
+        CompactRepoEntryView(entry: CompactRepoEntry(date: Date(), repo: MockData.repoOne, bottomRepo: MockData.repoTwo))
             .previewContext(WidgetPreviewContext(family: .systemLarge))
     }
 }
