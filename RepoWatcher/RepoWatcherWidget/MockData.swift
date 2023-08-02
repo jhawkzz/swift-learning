@@ -15,7 +15,12 @@ struct MockData {
                                         watchers: 403,
                                         openIssues: 2,
                                         pushedAt: "2023-07-14T18:05:59Z",
-                                        avatarData: Data())
+                                        contributorsUrl: RepoURL.swiftNews + "/contributors",
+                                        avatarData: Data(),
+                                        contributors: [Contributor(login: "Jered McFerron", avatarUrl: "", contributions: 42, avatarData: Data()),
+                                                       Contributor(login: "Trapper McFerron", avatarUrl: "", contributions: 30, avatarData: Data()),
+                                                       Contributor(login: "Michael Jordan", avatarUrl: "", contributions: 23, avatarData: Data()),
+                                                       Contributor(login: "Eddie Van Halen", avatarUrl: "", contributions: 5150, avatarData: Data())])
     
     static let repoTwo = Repository(name: "Repository 2",
                                         owner: Owner(avatarUrl: ""),
@@ -24,5 +29,6 @@ struct MockData {
                                         watchers: 976,
                                         openIssues: 122,
                                         pushedAt: "2021-07-14T18:05:59Z",
+                                        contributorsUrl: RepoURL.swiftNews + "/contributors",
                                         avatarData: Data())
 }
